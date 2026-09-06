@@ -1,0 +1,20 @@
+{
+  "name": "{{PROJECT_NAME}}",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --root src",
+    "build": "vite build --root src --outDir ../dist",
+    "preview": "vite preview --root src"
+  },
+  "dependencies": {
+    "dexie": "^4.0.0",
+    "y-dexie": "^1.0.0",
+    "yjs": "^13.0.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "vite-plugin-pwa": "^0.20.0"
+  }
+}

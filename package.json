@@ -1,0 +1,24 @@
+{
+  "name": "liab",
+  "version": "0.1.0",
+  "description": "Local-first development toolkit",
+  "type": "module",
+  "bin": {
+    "liab": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "commander": "^14.0.0",
+    "dexie": "^4.4.5",
+    "y-dexie": "^4.4.0",
+    "yis": "^0.0.1-alpha.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}
