@@ -1,0 +1,67 @@
+import Dexie from "dexie";
+import yDexie from "y-dexie";
+import type * as Y from "yjs";
+
+export const db = new Dexie("<%= projectName %>DB", {
+    addons: [yDexie]
+});
+
+db.version(1).stores({
+    kv: "key, data: Y.Doc",
+});
+
+console.log("Database initialized successfully.");
+
+<% if (framework === "react") { %>
+import React from "react";
+
+export function useYDoc(key: string) {
+    const [doc, setDoc] = React.useState<Y.Doc | null>(null);
+
+    useEffect(() => {
+        async function loadDoc() {
+            const record = await db.table("kv").get(key);
+            if (record && record.data) {
+                setDoc(record.data);
+                const handleUpdate = () => setDoc(Object.assign({}, record.data));
+                record.data.on("update", handleUpdate);
+                return () => {
+                    record.data.off("update", handleUpdate);
+                };
+            }
+        }
+        loadDoc();
+    }, [key]);
+
+    return doc!;
+}
+<% } else if (framework === "vue") { %>
+    import { ref, onMounted, onUnmounted } from "vue";
+
+    export function useYDoc(key: string) {
+        const doc = ref<Y.Doc | null>(null);
+        let record: any = null;
+
+        const handleUpdate = () => {
+            if (record && record.data) doc.value = record.data;
+        };
+
+        onMounted(async () => {
+            record = await db.table("kv").get(key);
+            if (record && record.data) {
+                doc.value = record.data;
+                record.data.on("update", handleUpdate);
+            }
+        });
+
+        onUnmounted(() => {
+            if (record && record.data) record.data.off("update", handleUpdate);
+        });
+
+        return { doc };
+    }
+<% } else if (framework === "svelte") { %>
+// Svelte-specific code can be added here if needed
+<% } else if (framework === "vanilla") { %>
+// Vanilla JS-specific code can be added here if needed
+<% } %>

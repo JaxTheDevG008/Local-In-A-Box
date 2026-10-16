@@ -19,7 +19,7 @@ export default defineConfig({
         start_url: "/",
         icons: [
           {
-            src: "https://js.org", // Stand-in asset icon
+            src: "https://js.org", 
             sizes: "512x512",
             type: "image/png"
           }
