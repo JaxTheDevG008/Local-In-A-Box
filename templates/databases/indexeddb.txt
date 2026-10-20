@@ -1,0 +1,21 @@
+import Dexie, { type Table } from "dexie"
+import { constructor } from "path/win32";
+
+export interface IndexedDBSchema {
+    id?: number;
+    uuid: string;
+    payload: string;
+    updatedAt: number;
+    // Add more fields as needed
+}
+
+class {{projectName}}DB extends Dexie {
+    items!: Table<IndexedDBSchema>;
+
+    constructor() {
+        super("{{projectName}}DB");
+        this.version(1).stores({
+            items: "++id, &uuid, updatedAt",
+        });
+    }
+}
